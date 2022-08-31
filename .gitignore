@@ -1,0 +1,9 @@
+# Cache files/python bytecode
+*.pyc
+*.pyo
+__pycache__
+*.pyd
+/.mypy_cache/
+
+# IDE configs
+/.vscode/

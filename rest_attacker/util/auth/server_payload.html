@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style type='text/css'>
+    th {
+      text-align: left;
+      width: 100px;
+    }
+
+    tr {
+      text-align: left;
+      width: 100px;
+    }
+  </style>
+  <title>RATT AuthResponse</title>
+</head>
+
+<body>
+  <p id='url'>Test</p>
+
+  <table id='query'></table>
+  <table id='fragment'></table>
+
+  <script>
+    function create_table_head(table, table_id) {
+      let thead = table.createTHead();
+      let row = thead.insertRow();
+      let th = document.createElement("th");
+      let text = document.createTextNode(table_id);
+      th.appendChild(text);
+      row.appendChild(th);
+
+      th = document.createElement("th");
+      text = document.createTextNode("value");
+      th.appendChild(text);
+      row.appendChild(th);
+    }
+
+    function create_table_rows(table, data) {
+      for (let element of data) {
+        let row = table.insertRow();
+
+        let cell = row.insertCell();
+        let text = document.createTextNode(element[0]);
+        cell.appendChild(text);
+
+        cell = row.insertCell();
+        text = document.createTextNode(element[1]);
+        cell.appendChild(text);
+      }
+    }
+
+    document.getElementById("url").innerHTML = window.location.href;
+
+    let table = document.getElementById("query");
+    if (window.location.search.length > 0) {
+      let query_params = new URLSearchParams(window.location.search);
+      create_table_head(table, "query");
+      create_table_rows(table, query_params);
+    }
+
+    if (window.location.hash.length > 0) {
+      let fragment_params = [];
+      let fragments = window.location.hash.substr(1).split('&');
+      for (const p of fragments) {
+        fragment_params.push(p.split('='));
+      }
+      table = document.getElementById("fragment");
+      create_table_head(table, "fragment");
+      create_table_rows(table, fragment_params);
+
+      // send fragment as query param in new request
+      fragment_query = "fragment=" + encodeURIComponent(window.location.hash);
+      fragment_request = window.location.href.split("#")[0];
+      if (window.location.search.length > 0) {
+        fragment_request = fragment_request + "&";
+      }
+      else {
+        fragment_request = fragment_request + "?";
+      }
+      fragment_request = fragment_request + fragment_query;
+
+      fetch(fragment_request);
+    }
+  </script>
+</body>
+
+</html>
