@@ -42,7 +42,7 @@ You need Python >3.10 for running the tool.
 You also need to install the following packages with pip:
 
 ```
-python3 -m pip install pyyaml requests requests_oauthlib oauthlib jsf jsonschema
+python3 -m pip install -r requirements.txt
 ```
 
 ## Quickstart

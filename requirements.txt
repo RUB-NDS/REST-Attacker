@@ -1,0 +1,6 @@
+pyyaml
+requests
+requests_oauthlib
+oauthlib
+jsf
+jsonschema
